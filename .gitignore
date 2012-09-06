@@ -5,3 +5,6 @@ _ReSharper*/
 *.user
 .DS_Store
 *.pyc
+*globalnames
+*history
+*objectdb
