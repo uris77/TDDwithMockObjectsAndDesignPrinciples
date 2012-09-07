@@ -4,11 +4,25 @@ import unittest
 from turn_ticket import TicketDispenser, TurnNumberSequence
 
 
-class TicketDispenserTests(unittest.TestCase):
+class SequenceInterfaceTests(object):
+    def __init__(self, sequence):
+        self.sequence = sequence
+
+    def test_implements_next_turn_number(self):
+        eq_(True, callable(getattr(self.sequence, 'next_turn_number')))
+
+
+class TurnNumberSequenceTests(unittest.TestCase, SequenceInterfaceTests):
+    def setUp(self):
+        self.sequence = TurnNumberSequence()
+
+
+class TicketDispenserTests(unittest.TestCase, SequenceInterfaceTests):
 
     def setUp(self):
-        self.dispenser1 = TicketDispenser()
-        self.dispenser2 = TicketDispenser()
+        self.sequence = TurnNumberSequence()
+        self.dispenser1 = TicketDispenser(self.sequence)
+        self.dispenser2 = TicketDispenser(self.sequence)
         TurnNumberSequence._turnNumber = -1
 
     def test_first_customer_should_get_ticket_number_zero(self):

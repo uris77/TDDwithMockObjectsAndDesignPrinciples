@@ -2,6 +2,7 @@ class TurnTicket(object):
     def __init__(self, turnNumber):
         self.turnNumber = turnNumber
 
+
 class TurnNumberSequence(object):
     _turnNumber = -1
 
@@ -12,7 +13,11 @@ class TurnNumberSequence(object):
 
 
 class TicketDispenser(object):
+
+    def __init__(self, sequence_generator):
+        self.sequence_generator = sequence_generator
+
     def getTurnTicket(self):
-        newTurnNumber = TurnNumberSequence.next_turn_number()
+        newTurnNumber = self.sequence_generator.next_turn_number()
         newTurnTicket = TurnTicket(newTurnNumber)
         return newTurnTicket
