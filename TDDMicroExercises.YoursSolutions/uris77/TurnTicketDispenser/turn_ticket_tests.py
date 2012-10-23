@@ -4,20 +4,7 @@ import unittest
 from turn_ticket import TicketDispenser, TurnNumberSequence
 
 
-class SequenceInterfaceTests(object):
-    def __init__(self, sequence):
-        self.sequence = sequence
-
-    def test_implements_next_turn_number(self):
-        eq_(True, callable(getattr(self.sequence, 'next_turn_number')))
-
-
-class TurnNumberSequenceTests(unittest.TestCase, SequenceInterfaceTests):
-    def setUp(self):
-        self.sequence = TurnNumberSequence()
-
-
-class TicketDispenserTests(unittest.TestCase, SequenceInterfaceTests):
+class TicketDispenserTests(unittest.TestCase):
 
     def setUp(self):
         self.sequence = TurnNumberSequence()
@@ -33,6 +20,6 @@ class TicketDispenserTests(unittest.TestCase, SequenceInterfaceTests):
         eq_(1, self.dispenser1.getTurnTicket().turnNumber)
 
     def test_dispensers_shouuld_not_return_same_number(self):
-        turn_number1 = self.dispenser1.getTurnTicket().turnNumber
-        turn_number2 = self.dispenser2.getTurnTicket().turnNumber
-        self.assertNotEqual(turn_number1, turn_number2)
+        ticket1 = self.dispenser1.getTurnTicket()
+        ticket2 = self.dispenser2.getTurnTicket()
+        self.assertNotEqual(ticket1.turnNumber, ticket2.turnNumber)
